@@ -1,0 +1,32 @@
+__default__:
+  time: "02:00:00"
+  partition: "medium"
+  nodes: 1
+  ntasks: 1
+  ncpus: 1
+  memory: "4G"
+  node_properties: scratch
+  job-name: "{rule}"
+  output: "slurm-%j-%x.out"
+  error: "slurm-%j-%x.err"
+sampling_reads:
+  time: "03:00:00"
+  memory: "16G"
+  ncpus: 4
+kallisto_index_transcriptome:
+  time: "01:00:00"
+  memory: "64G"
+  ncpus: 4
+kallisto_quantificatoin_unstranded:
+  memory: "64G"
+  ncpus: 4
+kallisto_quantificatoin_rf:
+  memory: "64G"
+  ncpus: 4
+kallisto_quantificatoin_fr:
+  memory: "64G"
+  ncpus: 4
+comparing_quantification_methods:
+  time: "00:30:00"
+determining_library_type:
+  time: "00:15:00"

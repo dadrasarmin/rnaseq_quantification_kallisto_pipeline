@@ -1,0 +1,32 @@
+__default__:
+  time: "04:00:00"
+  partition: "medium"
+  nodes: 1
+  ntasks: 1
+  ncpus: 1
+  memory: "8G"
+  node_properties: scratch
+  job-name: "{rule}"
+  output: "slurm-%j-%x.out"
+  error: "slurm-%j-%x.err"
+kallisto_quant:
+  time: "02:30:00"
+  memory: "64G"
+  ncpus: 20
+kallisto_index:
+  time: "02:00:00"
+  memory: "64G"
+  ncpus: 10
+fastqc_raw_reads:
+  time: "02:00:00"
+  ncpus: 4
+multiqc_raw_reads:
+  time: "00:30:00"
+  ncpus: 4
+trimmomatic:
+  time: "04:30:00"
+  memory: "16G"
+  ncpus: 8 
+fastqc_trimmed_reads:
+  time: "02:00:00"
+  memory: "32G"

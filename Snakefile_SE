@@ -1,0 +1,138 @@
+import os
+
+project_dir="/scratch/users/dadras/meso_table_resub/reviewer2/ppa/single_end/paper1" # Update THE PATH!
+input_se,=glob_wildcards(os.path.join(project_dir, "raw_reads_SE/{sample}.fq.gz")) # Update based on your file names, IT WILL NOT WORK IF YOU MISTAKENLY PUT fastq/fastq instead of fastq/fastq
+cdna_fasta="/scratch/users/dadras/meso_table_resub/reviewer2/ppa/Ppatens_318_v3.3.transcript.fa" # CHANGE THE PATH TO YOUR INDEX OF THE GENOME
+species="Ppatens_318_v3.3.transcript.fa"
+length="42" # First make the third step commented and look at the multiqc files for the trimmed reads to estimate these
+sd="8"
+######################################################################################################
+rule all:
+	input:
+###### Step 1: QC raw reads
+		os.path.join(project_dir,"quality_control", "raw_reads_SE_fastqc_summary.html"),
+###### Step 2: Filter, trim, and QC of trimmed 
+		expand(os.path.join(project_dir,"trimmed_reads_SE/{sample}.fq.gz"), sample=input_se),
+		os.path.join(project_dir,"quality_control","trimmed_reads_SE_fastqc_summary.html"),
+###### Step 3: Quantifying 
+		expand(os.path.join(project_dir,"logs", "kallisto_quant_{sample}.log"), sample=input_se),
+		filename=os.path.join(project_dir,"quality_control","everything_summary.html")
+
+rule multiqc_all:
+    input:
+        order=expand(os.path.join(project_dir,"logs", "kallisto_quant_{sample}.log"), sample=input_se)
+    output:
+        filename=os.path.join(project_dir,"quality_control","everything_summary.html")
+    conda: "envs/multiqc.yaml"
+    params:
+        everything=project_dir,
+        results_folder=os.path.join(project_dir, "quality_control/")
+    shell:
+        """
+        multiqc -o {params.results_folder} --filename {output.filename} {params.everything}
+        """
+
+rule kallisto_quant:
+    input:
+        fastq_1 = os.path.join(project_dir, "trimmed_reads_SE/{sample}.fq.gz"),
+        index = os.path.join(project_dir,"kallisto_index", species + ".idx")
+    output:
+        directory(os.path.join(project_dir, "kallisto", "{sample}"))
+    params:
+        extra = "--bootstrap-samples 100 --single -l "+length+" -s "+sd
+    conda: "envs/kallisto.yaml"
+    log:
+        os.path.join(project_dir,"logs", "kallisto_quant_{sample}.log")
+    threads: 20
+    shell:
+        """
+        kallisto quant {params.extra} -t {threads} -i {input.index} -o {output} {input.fastq_1} &> {log} 
+        """
+
+rule kallisto_index:
+    input:
+        fasta = cdna_fasta
+    output:
+        index = os.path.join(project_dir,"kallisto_index", species + ".idx")
+    params:
+        extra = "--kmer-size=31"
+    log:
+        os.path.join(project_dir, "logs/kallisto_index.log")
+    threads: 10
+    conda: "envs/kallisto.yaml"
+    shell:
+        """
+        kallisto index {params.extra} -i {output.index} {input.fasta}
+        """
+
+rule multiqc_trimmed_reads:
+	input:
+		order=expand(os.path.join(project_dir,"quality_control/trimmed_reads_SE/{sample}_fastqc.zip"), sample=input_se)
+	output:
+		filename=os.path.join(project_dir,"quality_control","trimmed_reads_SE_fastqc_summary.html")
+	conda: "envs/multiqc.yaml"
+	params:
+		trimmed_reads=os.path.join(project_dir,"quality_control/trimmed_reads_SE", ""),
+		results_folder=os.path.join(project_dir, "quality_control/")
+	shell:
+		"""
+		multiqc -o {params.results_folder} --filename {output.filename} {params.trimmed_reads}
+		"""	
+
+rule fastqc_trimmed_reads:
+	input: 
+		trimmed=os.path.join(project_dir,"trimmed_reads_SE/{sample}.fq.gz")
+	output:
+		html=os.path.join(project_dir,"quality_control/trimmed_reads_SE/{sample}_fastqc.html"),
+		zip=os.path.join(project_dir,"quality_control/trimmed_reads_SE/{sample}_fastqc.zip")
+	params:
+		folder=os.path.join(project_dir, "quality_control/trimmed_reads_SE",""),
+	conda: "envs/fastqc.yaml"
+	shell: 
+		"""
+		fastqc {input} -o {params.folder}
+		"""
+
+rule trimmomatic:
+	input:
+		r1=os.path.join(project_dir,"raw_reads_SE/{sample}.fq.gz"),
+	output:
+		r1=os.path.join(project_dir,"trimmed_reads_SE/{sample}.fq.gz")
+	params:
+		# list of trimmers (see manual)
+		trimmer=["ILLUMINACLIP:/usr/product/bioinfo/SL_7.0/BIOINFORMATICS/TRIMMOMATIC/0.36/adapters/TruSeq3-SE.fa:2:30:10 LEADING:26 TRAILING:26 SLIDINGWINDOW:4:20 MINLEN:36"],
+	shell:
+		"""
+		module load rev/11.06
+		module load JAVA/OSENJDK/13.0.1
+		module load trimmomatic/0.36
+		java -jar /usr/product/bioinfo/SL_7.0/BIOINFORMATICS/TRIMMOMATIC/0.36/trimmomatic-0.36.jar SE -threads 8 {input.r1} {output.r1} {params.trimmer}
+		"""	
+
+rule multiqc_raw_reads:
+	input:
+		order=expand(os.path.join(project_dir,"quality_control/raw_reads_SE/{sample}_fastqc.zip"), sample=input_se)
+	output:
+		filename=os.path.join(project_dir,"quality_control","raw_reads_SE_fastqc_summary.html"),
+	conda: "envs/multiqc.yaml"
+	params:
+		raw_reads=os.path.join(project_dir,"quality_control/raw_reads_SE", ""),
+		results_folder=os.path.join(project_dir, "quality_control/")
+	shell:
+		"""
+		multiqc -o {params.results_folder} --filename {output.filename} {params.raw_reads}
+		"""
+
+rule fastqc_raw_reads:
+	input: 
+		os.path.join(project_dir,"raw_reads_SE/{sample}.fq.gz")
+	output:
+		html=os.path.join(project_dir,"quality_control/raw_reads_SE/{sample}_fastqc.html"),
+		zip=os.path.join(project_dir,"quality_control/raw_reads_SE/{sample}_fastqc.zip")
+	params:
+		folder=os.path.join(project_dir, "quality_control/raw_reads_SE",""),
+	conda: "envs/fastqc.yaml"
+	shell: 
+		"""
+		fastqc {input} -o {params.folder}
+		"""
