@@ -72,7 +72,7 @@ If you have single-end files:
 cp Snakefile_SE Snakefile
 ```
 3. Modify the Snakefile parameters (lines above the hashtags). These are the parameters:
-YOU ARE WRITTING THIS PART!
+NOTE TO ARMIN: YOU ARE WRITTING THIS PART Mr. Hemingway!
 
 ## 5. Notes for development
 
