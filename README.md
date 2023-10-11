@@ -26,7 +26,7 @@ Note: In different files, I refer to a setting called `scratch` in my codes. It 
 ### 2.1. Transcriptome 
 You need the transcriptome of your organism. It can be downloaded from any database or website of your choice. If it is not available and you do not want to annotate the genome, you can also do it via the assembled transcriptome (with tools such as [Trinity](https://github.com/trinityrnaseq/trinityrnaseq/wiki)). However, the quality of transcriptome files that are based on genome annotation is usually considerably higher. So, if available use those.
 
-#### 2.1.1. What do we need it and how to find it?
+#### 2.1.1. Why do we need it and how to find it?
 
 Since we are using Kallisto in this pipeline, we pseudoalign the reads to the transcriptome instead of mapping to the genome and then create transcript assemblies (methods such as HISAT-StringTie). Therefore, we need to provide the transcriptome. According to the [Kallisto's FAQ page](https://pachterlab.github.io/kallisto/faq):
 
