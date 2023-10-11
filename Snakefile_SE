@@ -1,8 +1,8 @@
 import os
 
-project_dir="/scratch/users/dadras/meso_table_resub/reviewer2/ppa/single_end/paper1" # Update THE PATH!
+project_dir="PATH/single_end/paper1" # Update THE PATH!
 input_se,=glob_wildcards(os.path.join(project_dir, "raw_reads_SE/{sample}.fq.gz")) # Update based on your file names, IT WILL NOT WORK IF YOU MISTAKENLY PUT fastq/fastq instead of fastq/fastq
-cdna_fasta="/scratch/users/dadras/meso_table_resub/reviewer2/ppa/Ppatens_318_v3.3.transcript.fa" # CHANGE THE PATH TO YOUR INDEX OF THE GENOME
+cdna_fasta="PATH/Ppatens_318_v3.3.transcript.fa" # CHANGE THE PATH TO YOUR INDEX OF THE GENOME
 species="Ppatens_318_v3.3.transcript.fa"
 length="42" # First make the third step commented and look at the multiqc files for the trimmed reads to estimate these
 sd="8"
