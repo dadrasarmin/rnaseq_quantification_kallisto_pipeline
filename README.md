@@ -7,6 +7,7 @@ This pipeline is made via [Snakemake](https://snakemake.readthedocs.io/en/stable
 ## 2. Setup
 
 You are free to set up your system the way you like. I highly recommend the one below.
+
 First, install mamba.
 ```
 conda create -n snakemake -c conda-forge mamba
