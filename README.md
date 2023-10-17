@@ -74,8 +74,16 @@ If you have single-end files:
 cp Snakefile_SE Snakefile
 ```
 3. Modify the Snakefile parameters (lines above the hashtags). These are the parameters:
-NOTE TO ARMIN: YOU ARE WRITTING THIS PART Mr. Hemingway!
-
+- `project_dir`: The path to your project.
+- `input_pe`: This should include the folder name `raw_reads_PE` or `raw_reads_SE` and the pattern of your raw reads. If your raw reads do not ends to the format `sample_1.fq.gz` and `sample_2.fq.gz` (for paired-end reads), please rename them so they follow this pattern.
+- `reads`: This specifies the pattern of names in your paired-end reads. Please do not change it if possible. 
+- `cdna_fasta`: This will be the transcriptome file that you have downloaded from a database or you have prepared.
+- `species`: It is just a name that will be used by the kallisto to index the transcriptome. You can change it but you do not have to (why do you want to change it?)
+- `strandness_kallisto`: Here, you should specify whether your reads are unstranded, firststrand stranded, or secondstrand stranded.
+- `trimmer_setting`: These are the settings that will be used via Trimmomatic to filter and trim your raw reads. Then, these filtered and trimmed reads will be pseudoaligned to the transcriptome for quantification.
+- `length`: The average length of your trimmed and filtered reads. This is needed only for the single-end reads (not for the paired-end reads) for the quantification step via kallisto. If you have questions, please read the [kallisto documentation](https://pachterlab.github.io/kallisto/manual).
+- `sd`: The standard deviation of the lengths of your trimmed and filtered reads from the average length. Same as above, only required for the single-end samples.
+ 
 ## 5. Notes for development
 
 - I fixed the Kallisto version to `0.48.0` while `0.50.0` is available since I cannot update the conda environment on our server without root access. There is [an issue](https://github.com/pachterlab/kallisto/issues/399) with old conda environment and kallisto v0.50.0. If you have the right permissions, feel free to change it to the latest version.

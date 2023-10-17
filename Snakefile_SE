@@ -1,11 +1,12 @@
 import os
 
-project_dir="PATH/single_end/paper1" # Update THE PATH!
-input_se,=glob_wildcards(os.path.join(project_dir, "raw_reads_SE/{sample}.fq.gz")) # Update based on your file names, IT WILL NOT WORK IF YOU MISTAKENLY PUT fastq/fastq instead of fastq/fastq
-cdna_fasta="PATH/Ppatens_318_v3.3.transcript.fa" # CHANGE THE PATH TO YOUR INDEX OF THE GENOME
-species="Ppatens_318_v3.3.transcript.fa"
-length="42" # First make the third step commented and look at the multiqc files for the trimmed reads to estimate these
-sd="8"
+project_dir="PATH/single_end/paper1" 
+input_se,=glob_wildcards(os.path.join(project_dir, "raw_reads_SE/{sample}.fq.gz")) 
+cdna_fasta="PATH/FILENAME.fa" 
+species="indexed.fa"
+length="42" # This parameter is necessary for Kallisto. What is the average length of your reads after trimming? You can look at the MultiQC report in Step 2 below and readjust this value later and re-run the analysis. If you have questions, please read the [kallisto documentation](https://pachterlab.github.io/kallisto/manual).
+sd="8" # This parameter is necessary for Kallisto. What is the average length of your reads after trimming? You can look at the MultiQC report in Step 2 below and readjust this value later and re-run the analysis. If you have questions, please read the [kallisto documentation](https://pachterlab.github.io/kallisto/manual).
+trimmer_setting=["ILLUMINACLIP:adopters/adapter.fasta:2:30:10:2:True LEADING:26 TRAILING:26 SLIDINGWINDOW:4:20 MINLEN:36"] # See the manual if you want to change: https://github.com/usadellab/Trimmomatic
 ######################################################################################################
 rule all:
 	input:
@@ -98,15 +99,12 @@ rule trimmomatic:
 		r1=os.path.join(project_dir,"raw_reads_SE/{sample}.fq.gz"),
 	output:
 		r1=os.path.join(project_dir,"trimmed_reads_SE/{sample}.fq.gz")
+	conda: "envs/trimmomatic.yaml"
 	params:
-		# list of trimmers (see manual)
-		trimmer=["ILLUMINACLIP:/usr/product/bioinfo/SL_7.0/BIOINFORMATICS/TRIMMOMATIC/0.36/adapters/TruSeq3-SE.fa:2:30:10 LEADING:26 TRAILING:26 SLIDINGWINDOW:4:20 MINLEN:36"],
+		trimmer=trimmer_setting
 	shell:
 		"""
-		module load rev/11.06
-		module load JAVA/OSENJDK/13.0.1
-		module load trimmomatic/0.36
-		java -jar /usr/product/bioinfo/SL_7.0/BIOINFORMATICS/TRIMMOMATIC/0.36/trimmomatic-0.36.jar SE -threads 8 {input.r1} {output.r1} {params.trimmer}
+		trimmomatic SE -threads 8 {input.r1} {output.r1} {params.trimmer}
 		"""	
 
 rule multiqc_raw_reads:

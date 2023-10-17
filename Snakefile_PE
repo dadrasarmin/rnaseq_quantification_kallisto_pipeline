@@ -1,8 +1,8 @@
 import os
 
-project_dir="PATH_TO_YOUR_FOLDER" # Update THE PATH!
+project_dir="PATH_TO_YOUR_FOLDER" 
 input_pe,=glob_wildcards(os.path.join(project_dir, "raw_reads_PE/{sample}_1.fq.gz"))
-reads=["1", "2"] # Update based on your file names
+reads=["1", "2"] 
 cdna_fasta="PATH_TO_YOUR_FILE/FILENAME.fa"
 species="indexed.fa"
 strandness_kallisto="--rf-stranded" # –-rf-stranded for RF/fr-firststrand stranded (dUTP) AND -–fr-stranded for FR/fr-secondstrand stranded (Ligation)
@@ -108,7 +108,7 @@ rule trimmomatic:
 		# reads where trimming entirely removed the mate
 		r1_unpaired=os.path.join(project_dir,"trimmed_reads_PE/{sample}_1.unpaired.fq.gz"),
 		r2_unpaired=os.path.join(project_dir,"trimmed_reads_PE/{sample}_2.unpaired.fq.gz")
-	conda: "envs/fastqc.yaml"
+	conda: "envs/trimmomatic.yaml"
 	params:
 		trimmer=trimmer_setting
 	shell:
