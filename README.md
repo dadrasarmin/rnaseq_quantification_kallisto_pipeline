@@ -16,7 +16,8 @@ And then, use mamba to install snakemake:
 ```
 mamba install -c conda-forge -c bioconda snakemake
 ```
-The rest will be installed and managed via `Snakemake` and controlled using files inside `envs` folders. You do not have to do anything, but you can change the version, if you want. 
+The rest will be installed and managed via `Snakemake` and controlled using files inside `envs` folders. You do not have to do anything, but you can change the version, if you want.
+
 Note: In different files, I refer to a setting called `scratch` in my codes. It is something specific to my infrastructure and probably you do not have such a folder. Remove it from these files if it causes problem:
 - cluster.yaml
 - strandness/cluster.yaml
