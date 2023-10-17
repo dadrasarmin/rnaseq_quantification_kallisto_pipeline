@@ -23,7 +23,6 @@ Note: In different files, I refer to a setting called `scratch` in my codes. It 
 - strandness/cluster.yaml
 - strandness/submit_to_slurm.sh
 - submit_to_slurm.sh
-- ?
 
 ### 2.1. Transcriptome 
 You need the transcriptome of your organism. It can be downloaded from any database or website of your choice. If it is not available and you do not want to annotate the genome, you can also do it via the assembled transcriptome (with tools such as [Trinity](https://github.com/trinityrnaseq/trinityrnaseq/wiki)). However, the quality of transcriptome files that are based on genome annotation is usually considerably higher. So, if available use those.
