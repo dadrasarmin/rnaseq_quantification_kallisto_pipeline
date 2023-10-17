@@ -18,7 +18,7 @@ mamba install -c conda-forge -c bioconda snakemake
 ```
 The rest will be installed and managed via `Snakemake` and controlled using files inside `envs` folders. You do not have to do anything, but you can change the version, if you want.
 
-Note: In different files, I refer to a setting called `scratch` in my codes. It is something specific to my infrastructure and probably you do not have such a folder. Remove it from these files if it causes problem:
+**Note**: In different files, I refer to a setting called `scratch` in my codes. It is something specific to my infrastructure and probably you do not have such a folder. Remove it from these files if it causes problem:
 - cluster.yaml
 - strandness/cluster.yaml
 - strandness/submit_to_slurm.sh
@@ -34,19 +34,20 @@ Since we are using Kallisto in this pipeline, we pseudoalign the reads to the tr
 > Transcriptome fasta files for model organisms can be downloaded from the Ensembl database. We recommend using cDNA fasta, specifically the *.cdna.all.fa.gz files. kallisto can build indices directly from gzipped files.
 
 **Note**: It is field dependent. For some organisms, Ensembl database is not up to date or the most comprehensive one. You can also check NCBI, Phytozome, or organism specific websites.
+
 **Note 2**: It is better to always use cDNA file. Sometimes it is not available. Then, you can go for CDS. However, you may lose some information there. [What is the difference?](https://biology.stackexchange.com/questions/11377/difference-between-cds-and-cdna)
 
 ## 3. Strandness
 
 If you know the strandness status of your raw reads, you can skip this part. If you are not sure, or you want to perform a double check, we can take one sample from each batch of sequenced reads and check their strandness. Most of the times, samples are sequenced in one go (one batch) but it can be possible that the sample set that you are working with are from different groups, machines, or sets and they are sequenced with different settings. If there are more than one batch in your pool, please pick one sample per batch.
 
-1. Create a folder called `strandness` and copy your representative (randomly pick one sample per batch) reads to this folder via `cp`. If you have paired-end reads, copy both files.
+1. Create a folder called `strandness` and copy your representative (randomly pick one sample per batch) reads to this folder via `cp`. If you have paired-end reads, copy both forward and reverse files.
 2. If your samples are paired-end make a copy from `Snakefile_PE` and call it `Snakefile`. If your samples are single-end make a copy from `Snakefile_SE` and call it `Snakefile`.
-3. Edit the `Snakefile`. You should update everything that is above the line with lots of hastags. These include:
+3. Edit the `Snakefile`. You should update everything that is above the line with lots of hashtags. These include:
 - `transcriptome`: The path to your transcriptome file (cDNA or CDS)
 - `path_to_reads`: Path to the folder you made
-- `reads`: the pattern of your files. For example, if you have single-end reads it can be {sample}.fq.gz. If you have paired-end reads, then it should only refer to the forward (1) read. The program will take care of the reverse one. For example, {sample}_1.fq.gz. I highly recommend to rename your files to have this pattern and ending. Otherwise, you have to adjust the code on multiple lines and if you miss one the program does not work. If you have both 
-- `output_dir`: this will be the place to save the results. I suggest to copy the same folder as strandness and add `/results` but you can give it any name or path you want.
+- `reads`: the pattern of your files. For example, if you have single-end reads it can be {sample}.fq.gz. If you have paired-end reads, then it should only refer to the forward (sample_name_1.fq.gz) read. The program will take care of the reverse one. For example, {sample}_1.fq.gz. I highly recommend to rename your files to have this pattern and ending. Otherwise, you have to adjust the code on multiple lines and if you miss one the program does not work.
+- `output_dir`: This will be the place to save the results. I suggest to copy the same folder as strandness path and add `/results` but you can give it any name or path you want.
 4. Then,
 (a) if you have a server with slurm use this command to start the program:
 ```
@@ -57,13 +58,13 @@ sbatch submit_to_slurm.sh
 snakemake -j 100 --use-conda
 ```
 
-When it is finished, you get a file in your output folder with this filename pattern: `{read}_test.libtype`. If it is `stranded` then this specific sample (and all of its batch) is `FR/fr-secondstrand stranded (Ligation)`. If it is `reverse` then this specific sample (and all of its batch) is `RF/fr-firststrand stranded (dUTP)`. If it is `unstranded` then this specific sample (and all of its batch) is `Unstranded`. To investigate what happens under the code either check the code or read [this website](https://littlebitofdata.com/en/2017/08/strandness_in_rnaseq/).
+When it is finished, you get a file in your output folder with this filename pattern: `{read}_test.libtype`. If the content of this file is `stranded` then this specific sample (and all samples belong to this batch) is `FR/fr-secondstrand stranded (Ligation)`. If it is `reverse` then this specific sample (and all samples of this batch) is `RF/fr-firststrand stranded (dUTP)`. If it is `unstranded` then this specific sample (and all samples of this batch) is `Unstranded`. To investigate what happens under the code either check the code or read [this website](https://littlebitofdata.com/en/2017/08/strandness_in_rnaseq/).
 
 ## 4. Quantification
 
-Now, you know the strandness of your raw reads. If they are from different batch **AND** they have different strandness, **you have to quantify them separately otherwise what you get is wrong.** To quantify different batches separately, put the under different directories (folders). From now on, I assume that you have **all** of your raw reads from the same `strandness` type in one folder.
+Now, you know the strandness of your raw reads. If they are from different batch **AND** they have different strandness, **you have to quantify them separately otherwise what you get is _wrong_.** To quantify different batches separately, put them under different directories (folders). From now on, I assume that you have **all** of your raw reads from the same `strandness` type in one folder. If you have more than one of these folders, repeat the everything below on each folder separately.
 
-1. Create a folder called `raw_reads_PE` and put all of your paired end reads inside this one. If you have single-end reads, create a folder called `raw_reads_SE` and put all of your single-end reads here.
+1. Create a folder called `raw_reads_PE` inside the project folder and put all of your paired end reads inside this one. If you have single-end reads, create a folder called `raw_reads_SE` and put all of your single-end reads here.
 2. Make a copy of the appropriate template. If you have paired-end files:
 ```
 cp Snakefile_PE Snakefile
