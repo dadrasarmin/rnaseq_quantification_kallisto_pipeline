@@ -16,7 +16,7 @@ After you have downloaded the raw reads, you should also download the transcript
 ```
 wget https://mesotaenium.uni-goettingen.de/assets/Me1_v2.release.gff3.cdna.fasta
 ```
-I also have to download the scripts and files of this repository to my machine. There are many ways to do that, but I like to use git as follows:
+I also have to download the scripts and files of this repository on my machine. There are many ways to do that, but I like to use git as follows:
 ```
 git clone https://github.com/dadrasarmin/rnaseq_quantification_kallisto_pipeline.git
 ```
@@ -28,7 +28,7 @@ Also, do not forget to activate your conda environment.
 
 ## Follow the protocol
 
-I know the strandness of these samples, but let's say I am agnostic. Therefore, I should first perform the strandness check and then the quantification steps.
+I know the strandness of these samples, but let's assume I am agnostic. Therefore, I should first perform the strandness check and then the quantification steps.
 
 1. In my project folder, I create a folder called `strandness` and copy files of one sample (2 files) in that folder.
 2. I move to the subfolder `rnaseq_quantification_kallisto_pipeline/strandness/` and create a copy of `Snakefile_PE` and name it `Snakefile`. Then, I modify the lines above the hashtags as mentioned in the tutorial and submit the job via Slurm (or run it locally).
