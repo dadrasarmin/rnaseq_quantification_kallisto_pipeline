@@ -6,7 +6,7 @@ reads=["1", "2"]
 cdna_fasta="PATH_TO_YOUR_FILE/FILENAME.fa"
 species="indexed.fa"
 strandness_kallisto="--rf-stranded" # –-rf-stranded for RF/fr-firststrand stranded (dUTP) AND -–fr-stranded for FR/fr-secondstrand stranded (Ligation)
-trimmer_setting=["ILLUMINACLIP:adopters/adapter.fasta:2:30:10:2:True LEADING:26 TRAILING:26 SLIDINGWINDOW:4:20 MINLEN:36"] # See the manual if you want to change: https://github.com/usadellab/Trimmomatic
+trimmer_setting=["ILLUMINACLIP:adapters/adapter.fasta:2:30:10:2:True LEADING:26 TRAILING:26 SLIDINGWINDOW:4:20 MINLEN:36"] # See the manual if you want to change: https://github.com/usadellab/Trimmomatic
 ######################################################################################################
 
 rule all:
