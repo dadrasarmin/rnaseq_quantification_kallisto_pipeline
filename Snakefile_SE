@@ -6,7 +6,7 @@ cdna_fasta="PATH/FILENAME.fa"
 species="indexed.fa"
 length="42" # This parameter is necessary for Kallisto. What is the average length of your reads after trimming? You can look at the MultiQC report in Step 2 below and readjust this value later and re-run the analysis. If you have questions, please read the [kallisto documentation](https://pachterlab.github.io/kallisto/manual).
 sd="8" # This parameter is necessary for Kallisto. What is the average length of your reads after trimming? You can look at the MultiQC report in Step 2 below and readjust this value later and re-run the analysis. If you have questions, please read the [kallisto documentation](https://pachterlab.github.io/kallisto/manual).
-trimmer_setting=["ILLUMINACLIP:adopters/adapter.fasta:2:30:10:2:True LEADING:26 TRAILING:26 SLIDINGWINDOW:4:20 MINLEN:36"] # See the manual if you want to change: https://github.com/usadellab/Trimmomatic
+trimmer_setting=["ILLUMINACLIP:adapters/adapter.fasta:2:30:10:2:True LEADING:26 TRAILING:26 SLIDINGWINDOW:4:20 MINLEN:36"] # See the manual if you want to change: https://github.com/usadellab/Trimmomatic
 ######################################################################################################
 rule all:
 	input:
