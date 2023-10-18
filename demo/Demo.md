@@ -4,7 +4,7 @@
 
 This file has been written on 18th October 2023. Maybe it is not update or functional anymore.
 
-In this demo, we are going to use a few samples from Dadras et al. 2023 to show how to use this pipeline to get expression tables from raw reads. These are samples of *Mesotaenium endlicherianum* grew under different temperature and light intensity. You can pick a different study or different subset of samples from this study. I first downloaded the raw reads from European Nucleotide Archive (ENA) website. You can also down them from NCBI or any other way you like. I put the links to the FTP files in one text file and used `wget` to download them as follows:
+In this demo, we are going to use a few samples from [Dadras et al. 2023](https://doi.org/10.1038/s41477-023-01491-0) to show how to use this pipeline to get expression tables from raw reads. These are samples of *Mesotaenium endlicherianum* grew under different temperature and light intensity. You can pick a different study or different subset of samples from this study. I first downloaded the raw reads from European Nucleotide Archive (ENA) website. You can also down them from NCBI or any other way you like. I put the links to the FTP files in one text file and used `wget` to download them as follows:
 ```
 wget -i download_links.txt
 ```
