@@ -8,7 +8,7 @@ In this demo, we are going to use a few samples from [Dadras et al. 2023](https:
 ```
 wget -i download_links.txt
 ```
-Do not forget that this will occupy a huge part of your storage space, so if you do not have enough space please make the list shorter. I provided a study design file in this folder as well, `study_design.txt`, which can be used to investigate the metadata that is available for each sample. I picked many samples because of two reasons. First, I want to show that this pipeline is very good at scaling analysis if you have good infrastructure available. Second, because I want to build on top of the results of this project to make tutorials for differential gene expression analysis, co-expression network analysis, and exploratory data analysis. For the co-expression network analysis, we need to have at least 20 samples. For the rest, we could use only 6 (or more). It is around 118G
+Do not forget that this will occupy a huge part of your storage space, so if you do not have enough space please make the list shorter. I provided a study design file in this folder as well, `study_design.tsv`, which can be used to investigate the metadata that is available for each sample. I picked many samples because of two reasons. First, I want to show that this pipeline is very good at scaling analysis if you have good infrastructure available. Second, because I want to build on top of the results of this project to make tutorials for differential gene expression analysis, co-expression network analysis, and exploratory data analysis. For the co-expression network analysis, we need to have at least 20 samples. For the rest, we could use only 6 (or more). It is around 118G
 
 ## Set the stage
 
