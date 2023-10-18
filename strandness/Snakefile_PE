@@ -1,9 +1,9 @@
 import os
 
-transcriptome="PATH_TO_YOUR_FILE/nostoc_azollae_0708_gca_000196515.ASM19651v1.cdna.all.fa"
-path_to_reads="PATH_TO_YOUR_FILE/strandness/" # the path to the FOLDER of the reads
+transcriptome="/path/to/your/files/transcriptome.fasta"
+path_to_reads="/path/to/your/files/strandness"
 reads,=glob_wildcards(os.path.join(path_to_reads, "{sample}_1.fq.gz"))
-output_dir="PATH_TO_YOUR_FILE/strandness/results" # The files will be here
+output_dir="/path/to/your/files/strandness/results" # The files will be here
 ################################################################################################################
 
 rule all:

@@ -5,7 +5,7 @@
 #SBATCH -o outfile-%J
 #SBATCH -C scratch
 #SBATCH --mail-type=BEGIN,END
-#SBATCH --mail-user=USERNAME@uni-goettingen.de
+#SBATCH --mail-user=USERNAME@domain.com
 
 # Please edit the email section! I do not want to receive emails for your jobs.
 

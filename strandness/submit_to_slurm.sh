@@ -5,7 +5,7 @@
 #SBATCH -o outfile-%J
 # #SBATCH -C scratch # This is a system specific parameter for my machine. Add or remove SBATCH commands as you need.
 #SBATCH --mail-type=BEGIN,END
-#SBATCH --mail-user=USERNAME@DOMAIN.COM # Put your email address here
+#SBATCH --mail-user=username@domain.com # Put your email address here
 
 # The line below reads the specifications from the cluster.yaml file.
 SLURM_ARGS="-p {cluster.partition} -N {cluster.nodes} -n {cluster.ntasks} -c {cluster.ncpus} -t {cluster.time} -J {cluster.job-name} -o {cluster.output} -e {cluster.error} --mem={cluster.memory} -C {cluster.node_properties}"
