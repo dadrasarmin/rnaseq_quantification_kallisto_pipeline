@@ -1,4 +1,5 @@
 # From raw reads to expression table
+This file has been written on 18th October 2023. Maybe it is not update or functional anymore.
 
 ## 1. Introduction
 
