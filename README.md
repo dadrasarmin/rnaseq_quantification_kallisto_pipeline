@@ -88,3 +88,4 @@ cp Snakefile_SE Snakefile
 ## 5. Notes for development
 
 - I fixed the Kallisto version to `0.48.0` while `0.50.0` is available since I cannot update the conda environment on our server without root access. There is [an issue](https://github.com/pachterlab/kallisto/issues/399) with old conda environment and kallisto v0.50.0. If you have the right permissions, feel free to change it to the latest version.
+- Just a few days before I test this repo, there was an update and MultiQC could not work with Python 3.12. There will be a patch for it, but for the moment I fixed the python version for MultiQC to 3.11 as a quick solution.
