@@ -88,6 +88,8 @@ cp Snakefile_SE Snakefile
 - `trimmer_setting`: These are the settings that will be used via Trimmomatic to filter and trim your raw reads. Then, these filtered and trimmed reads will be pseudoaligned to the transcriptome for quantification.
 - `length`: The average length of your trimmed and filtered reads. This is needed only for the single-end reads (not for the paired-end reads) for the quantification step via kallisto. If you have questions, please read the [kallisto documentation](https://pachterlab.github.io/kallisto/manual).
 - `sd`: The standard deviation of the lengths of your trimmed and filtered reads from the average length. Same as above, only required for the single-end samples.
+
+**A demonstration video has been uploaded here: https://doi.org/10.5281/zenodo.10024846**
  
 ## 5. Notes for development
 
