@@ -15,11 +15,11 @@ You are free to set up your system the way you like. I highly recommend the one 
 
 First, install mamba.
 ```
-conda create -n snakemake -c conda-forge mamba
+conda create -n snakemake -c conda-forge mamba python=3.10
 ```
 And then, use mamba to install snakemake:
 ```
-mamba install -c conda-forge -c bioconda snakemake
+mamba install -c conda-forge -c bioconda snakemake=7.7.0
 ```
 The rest will be installed and managed via `Snakemake` and controlled using files inside `envs` folders. You do not have to do anything, but you can change the version, if you want.
 
