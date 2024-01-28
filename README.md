@@ -15,7 +15,7 @@ You are free to set up your system the way you like. I highly recommend the one 
 
 First, install mamba.
 ```
-conda create -n snakemake -c conda-forge mamba python=3.10 tabulate=8.9.0
+conda create -n snakemake -c conda-forge mamba python=3.10 tabulate=0.9.0
 ```
 And then, use mamba to install snakemake:
 ```
