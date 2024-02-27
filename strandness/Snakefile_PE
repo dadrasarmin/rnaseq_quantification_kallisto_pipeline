@@ -88,17 +88,17 @@ rule kallisto_index_transcriptome:
 		"kallisto index -i {output.index_filename} {transcriptome}"
 
 rule sampling_reads_2:
-    input:
-        os.path.join(path_to_reads, "{read}_2.fq.gz")
-    output:
-        os.path.join(output_dir, "sampled", "{read}_2.fq.gz")
-    conda:
-        "envs/seqtk.yaml"
-    log: os.path.join(output_dir, "logs/sampling_reads_{read}_2.log")
-    params:
-        number_of_sample=1000000
-    shell:
-        "seqtk sample -s100 {input} {params.number_of_sample} > {output}"
+	input:
+		os.path.join(path_to_reads, "{read}_2.fq.gz")
+	output:
+		os.path.join(output_dir, "sampled", "{read}_2.fq.gz")
+	conda:
+		"envs/seqtk.yaml"
+	log: os.path.join(output_dir, "logs/sampling_reads_{read}_2.log")
+	params:
+		number_of_sample=1000000
+	shell:
+		"seqtk sample -s100 {input} {params.number_of_sample} > {output}"
 
 rule sampling_reads_1:
 	input:
