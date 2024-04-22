@@ -1,5 +1,6 @@
 # From raw reads to expression table
 This file has been written on 22nd of April 2024. Maybe it is not update or functional anymore in future.
+Thanks to @elisagold, this pipeline is now compatible with Snakemake version > 8.
 
 ## 0. Workflow
 
@@ -21,11 +22,15 @@ And then, use mamba to install snakemake:
 ```
 mamba install -c conda-forge -c bioconda snakemake
 ```
-The rest will be installed and managed via `Snakemake` and controlled using files inside `envs` folders. You do not have to do anything, but you can change the version, if you want.
+Since Snakemake version 8, you have to do a few extra steps:
+```
+pip install snakemake-executor-plugin-cluster-generic
+```
+The rest will be installed and managed via `Snakemake` and controlled using files inside `envs` and `profile`  folders. You do not have to do anything, but you can change the version, if you want.
 
 **Note**: In different files, I refer to a setting called `scratch` in my codes. It is something specific to my infrastructure and probably you do not have such a folder. Remove it from these files if it causes problem:
-- cluster.yaml
-- strandness/cluster.yaml
+- profile/config.yaml
+- strandness/profile/config.yaml
 - strandness/submit_to_slurm.sh
 - submit_to_slurm.sh
 
@@ -60,7 +65,7 @@ sbatch submit_to_slurm.sh
 ```
 (b) if you want to submit the job on a local machine (or a machine without slurm) start the workflow as follows:
 ```
-snakemake -j 100 --use-conda
+snakemake -j 100 --software-deployment-method conda --executor cluster-generic --cluster-generic-submit-cmd "sbatch" --profile profile/
 ```
 
 When it is finished, you get a file in your output folder with this filename pattern: `{read}_test.libtype`. If the content of this file is `stranded` then this specific sample (and all samples belong to this batch) is `FR/fr-secondstrand stranded (Ligation)`. If it is `reverse` then this specific sample (and all samples of this batch) is `RF/fr-firststrand stranded (dUTP)`. If it is `unstranded` then this specific sample (and all samples of this batch) is `Unstranded`. To investigate what happens under the code either check the code or read [this website](https://littlebitofdata.com/en/2017/08/strandness_in_rnaseq/).

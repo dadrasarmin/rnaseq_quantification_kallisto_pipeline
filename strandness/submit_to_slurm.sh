@@ -7,7 +7,5 @@
 #SBATCH --mail-type=BEGIN,END
 #SBATCH --mail-user=username@domain.com # Put your email address here
 
-# The line below reads the specifications from the cluster.yaml file.
-SLURM_ARGS="-p {cluster.partition} -N {cluster.nodes} -n {cluster.ntasks} -c {cluster.ncpus} -t {cluster.time} -J {cluster.job-name} -o {cluster.output} -e {cluster.error} --mem={cluster.memory} -C {cluster.node_properties}"
 # This file execute the snakefile. -j specify the maximum number of jobs to be executed at the same time if there are resources available. Tune it according to your needs.
-snakemake -j 100 --software-deployment-method conda --cluster-config cluster.yaml --cluster "sbatch $SLURM_ARGS"
+snakemake -j 100 --software-deployment-method conda --executor cluster-generic --cluster-generic-submit-cmd "sbatch" --profile profile/
