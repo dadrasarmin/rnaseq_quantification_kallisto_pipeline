@@ -1,6 +1,6 @@
 # From raw reads to expression table
 This file has been written on 22nd of April 2024. Maybe it is not update or functional anymore in future.
-Thanks to @elisagold, this pipeline is now compatible with Snakemake version > 8.
+Thanks to [Elisa](https://github.com/elisagold), this pipeline is now compatible with Snakemake version > 8.
 
 ## 0. Workflow
 
