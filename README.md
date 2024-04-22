@@ -1,5 +1,5 @@
 # From raw reads to expression table
-This file has been written on 18th October 2023. Maybe it is not update or functional anymore.
+This file has been written on 22nd of April 2024. Maybe it is not update or functional anymore in future.
 
 ## 0. Workflow
 
@@ -15,11 +15,11 @@ You are free to set up your system the way you like. I highly recommend the one 
 
 First, install mamba.
 ```
-conda create -n snakemake -c conda-forge mamba python=3.10 tabulate=0.8.10
+conda create -n snakemake -c conda-forge mamba python
 ```
 And then, use mamba to install snakemake:
 ```
-mamba install -c conda-forge -c bioconda snakemake=7.7.0
+mamba install -c conda-forge -c bioconda snakemake
 ```
 The rest will be installed and managed via `Snakemake` and controlled using files inside `envs` folders. You do not have to do anything, but you can change the version, if you want.
 
@@ -94,4 +94,3 @@ cp Snakefile_SE Snakefile
 ## 5. Notes for development
 
 - I fixed the Kallisto version to `0.48.0` while `0.50.0` is available since I cannot update the conda environment on our server without root access. There is [an issue](https://github.com/pachterlab/kallisto/issues/399) with old conda environment and kallisto v0.50.0. If you have the right permissions, feel free to change it to the latest version.
-- Just a few days before I test this repo, there was an update and MultiQC could not work with Python 3.12. There will be a patch for it, but for the moment I fixed the python version for MultiQC to 3.11 as a quick solution.

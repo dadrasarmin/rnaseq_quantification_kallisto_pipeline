@@ -11,4 +11,4 @@
 
 SLURM_ARGS="-p {cluster.partition} -N {cluster.nodes} -n {cluster.ntasks} -c {cluster.ncpus} -t {cluster.time} -J {cluster.job-name} -o {cluster.output} -e {cluster.error} --mem={cluster.memory} -C {cluster.node_properties}"
 
-snakemake -j 100 -pr --use-conda --cluster-config cluster.yaml --cluster "sbatch $SLURM_ARGS"
+snakemake -j 100 -pr --software-deployment-method conda --cluster-config cluster.yaml --cluster "sbatch $SLURM_ARGS"
