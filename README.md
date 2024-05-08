@@ -1,5 +1,6 @@
 # From raw reads to expression table
-This file has been written on 18th October 2023. Maybe it is not update or functional anymore.
+This file has been written on 22nd of April 2024. Maybe it is not update or functional anymore in future.
+Thanks to [Elisa](https://github.com/elisagold), this pipeline is now compatible with Snakemake version > 8.
 
 ## 0. Workflow
 
@@ -15,17 +16,21 @@ You are free to set up your system the way you like. I highly recommend the one 
 
 First, install mamba.
 ```
-conda create -n snakemake -c conda-forge mamba python=3.10 tabulate=0.8.10
+conda create -n snakemake -c conda-forge mamba python
 ```
 And then, use mamba to install snakemake:
 ```
-mamba install -c conda-forge -c bioconda snakemake=7.7.0
+mamba install -c conda-forge -c bioconda snakemake
 ```
-The rest will be installed and managed via `Snakemake` and controlled using files inside `envs` folders. You do not have to do anything, but you can change the version, if you want.
+Since Snakemake version 8, you have to do a few extra steps:
+```
+pip install snakemake-executor-plugin-cluster-generic
+```
+The rest will be installed and managed via `Snakemake` and controlled using files inside `envs` and `profile`  folders. You do not have to do anything, but you can change the version, if you want.
 
 **Note**: In different files, I refer to a setting called `scratch` in my codes. It is something specific to my infrastructure and probably you do not have such a folder. Remove it from these files if it causes problem:
-- cluster.yaml
-- strandness/cluster.yaml
+- profile/config.yaml
+- strandness/profile/config.yaml
 - strandness/submit_to_slurm.sh
 - submit_to_slurm.sh
 
@@ -60,7 +65,7 @@ sbatch submit_to_slurm.sh
 ```
 (b) if you want to submit the job on a local machine (or a machine without slurm) start the workflow as follows:
 ```
-snakemake -j 100 --use-conda
+snakemake -j 100 --software-deployment-method conda --executor cluster-generic --cluster-generic-submit-cmd "sbatch" --profile profile/
 ```
 
 When it is finished, you get a file in your output folder with this filename pattern: `{read}_test.libtype`. If the content of this file is `stranded` then this specific sample (and all samples belong to this batch) is `FR/fr-secondstrand stranded (Ligation)`. If it is `reverse` then this specific sample (and all samples of this batch) is `RF/fr-firststrand stranded (dUTP)`. If it is `unstranded` then this specific sample (and all samples of this batch) is `Unstranded`. To investigate what happens under the code either check the code or read [this website](https://littlebitofdata.com/en/2017/08/strandness_in_rnaseq/).
@@ -94,4 +99,3 @@ cp Snakefile_SE Snakefile
 ## 5. Notes for development
 
 - I fixed the Kallisto version to `0.48.0` while `0.50.0` is available since I cannot update the conda environment on our server without root access. There is [an issue](https://github.com/pachterlab/kallisto/issues/399) with old conda environment and kallisto v0.50.0. If you have the right permissions, feel free to change it to the latest version.
-- Just a few days before I test this repo, there was an update and MultiQC could not work with Python 3.12. There will be a patch for it, but for the moment I fixed the python version for MultiQC to 3.11 as a quick solution.
