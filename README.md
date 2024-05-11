@@ -1,6 +1,6 @@
 # From raw reads to expression table
-This file has been written on 22nd of April 2024. Maybe it is not update or functional anymore in future.
-Thanks to [Elisa](https://github.com/elisagold), this pipeline is now compatible with Snakemake version > 8.
+This file has been written on 11th of May 2024. Maybe it is not update or functional anymore in future.
+The profile and submission scripts were not used by Snakemake to submit the jobs and they had the default resources. This caused problem for some large files and slowed the processed drastically. I solved the problem based on [this](https://snakemake.github.io/snakemake-plugin-catalog/plugins/executor/slurm.html), [this](https://www.embl.org/groups/bioinformatics-rome/blog/2022/05/snakemake-profile-5-handling-memory-and-timeout-errors/), and [this](https://snakemake.readthedocs.io/en/stable/). This setup has been tested with Snakemake version 8.11.3 and Slurm version 23.11.4 and works properly.
 
 ## 0. Workflow
 
@@ -25,6 +25,7 @@ mamba install -c conda-forge -c bioconda snakemake
 Since Snakemake version 8, you have to do a few extra steps:
 ```
 pip install snakemake-executor-plugin-cluster-generic
+pip install snakemake-executor-plugin-slurm
 ```
 The rest will be installed and managed via `Snakemake` and controlled using files inside `envs` and `profile`  folders. You do not have to do anything, but you can change the version, if you want.
 
