@@ -1,32 +1,45 @@
-__default__:
-  time: "04:00:00"
-  partition: "medium"
-  nodes: 1
-  ntasks: 1
-  ncpus: 1
-  memory: "8G"
-  node_properties: scratch
-  job-name: "{rule}"
-  output: "slurm-%j-%x.out"
-  error: "slurm-%j-%x.err"
-kallisto_quant:
-  time: "02:30:00"
-  memory: "64G"
-  ncpus: 20
-kallisto_index:
-  time: "02:00:00"
-  memory: "64G"
-  ncpus: 10
-fastqc_raw_reads:
-  time: "02:00:00"
-  ncpus: 4
-multiqc_raw_reads:
-  time: "00:30:00"
-  ncpus: 4
-trimmomatic:
-  time: "04:30:00"
-  memory: "16G"
-  ncpus: 8 
-fastqc_trimmed_reads:
-  time: "02:00:00"
-  memory: "32G"
+executor: slurm
+jobs: 100
+latency-wait: 60
+rerun-incomplete: True
+restart-times: 3
+jobname: "{rule}.{jobid}"
+# Cluster submission
+max-jobs-per-second: 10 # Maximal number of cluster/drmaa jobs per second, default is 10, fractions allowed.
+max-status-checks-per-second: 10 # Maximal number of job status checks per second, default is 10
+cluster-generic-submit-cmd: "sbatch --output={resources.output} --error={resources.error} --mem={resources.mem_mb} --time={resources.runtime} --cpus-per-task={resources.cpus_per_task} -N={resources.nodes} -n={resources.tasks}"
+# Job resources
+default-resources:
+    mem_mb: 8000
+    runtime: "4h"
+    slurm_partition: "medium"
+    node_properties: scratch
+    tasks: 1
+    nodes: 1
+    slurm_extra: "'-o slurm_%j.out -e slurm_%j.log'"
+set-resources:
+    kallisto_quant:
+        mem_mb: 64000
+        runtime: "3h"
+        cpus_per_task: 20
+    kallisto_index:
+        mem_mb: 64000
+        cpus_per_task: 10
+    kallisto_index:
+        runtime: "2h"
+        cpus_per_task: 10
+    fastqc_raw_reads:
+        runtime: "2h"
+        cpus_per_task: 4
+        mem_mb: 32000
+    fastqc_trimmed_reads:
+        runtime: "2h"
+        cpus_per_task: 4
+        mem_mb: 32000
+    multiqc_raw_reads:
+        runtime: "30m"
+        cpus_per_task: 4
+    trimmomatic:
+        runtime: "4h"
+        mem_mb: 16000
+        cpus_per_task: 8
