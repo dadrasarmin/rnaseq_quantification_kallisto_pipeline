@@ -1,11 +1,12 @@
 #!/bin/bash
-#SBATCH -t 04:00:00
+#SBATCH -t 16:00:00
 #SBATCH -c 2
-#SBATCH --mem-per-cpu=3G
+#SBATCH --mem=10G
 #SBATCH -o outfile-%J
-# #SBATCH -C scratch # This is a system specific parameter for my machine. Add or remove SBATCH commands as you need.
+#SBATCH -C scratch
 #SBATCH --mail-type=BEGIN,END
-#SBATCH --mail-user=username@domain.com # Put your email address here
+#SBATCH --mail-user=armin.dadras@uni-goettingen.de
 
-# This file execute the snakefile. -j specify the maximum number of jobs to be executed at the same time if there are resources available. Tune it according to your needs.
-snakemake -j 100 --software-deployment-method conda --executor cluster-generic --cluster-generic-submit-cmd "sbatch" --profile profile/
+# Please edit the email section! I do not want to receive emails for your jobs.
+
+snakemake -p --software-deployment-method conda --executor slurm --profile profile/
