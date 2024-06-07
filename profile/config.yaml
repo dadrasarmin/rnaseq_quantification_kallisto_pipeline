@@ -7,7 +7,7 @@ jobname: "{rule}.{jobid}"
 # Cluster submission
 max-jobs-per-second: 10 # Maximal number of cluster/drmaa jobs per second, default is 10, fractions allowed.
 max-status-checks-per-second: 10 # Maximal number of job status checks per second, default is 10
-cluster-generic-submit-cmd: "sbatch --output={resources.output} --error={resources.error} --mem={resources.mem_mb} --time={resources.runtime} --cpus-per-task={resources.cpus_per_task} -N={resources.nodes} -n={resources.tasks}"
+cluster-generic-submit-cmd: "sbatch --output={resources.output} --error={resources.error} --mem={resources.mem_mb} --time={resources.runtime} -p {resources.slurm_partition} --cpus-per-task={resources.cpus_per_task} -N={resources.nodes} -n={resources.tasks}"
 # Job resources
 default-resources:
     mem_mb: 8000
