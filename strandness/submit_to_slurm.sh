@@ -4,6 +4,7 @@
 #SBATCH --mem=10G
 #SBATCH -o outfile-%J
 #SBATCH -C scratch
+#SBATCH -p medium
 #SBATCH --mail-type=BEGIN,END
 #SBATCH --mail-user=armin.dadras@uni-goettingen.de
 
