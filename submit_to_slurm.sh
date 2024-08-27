@@ -10,4 +10,4 @@
 
 # Please edit the email section! I do not want to receive emails for your jobs.
 
-snakemake -p --software-deployment-method conda --executor slurm --profile profile/
+snakemake -p --software-deployment-method conda --executor slurm --profile profile/ --scheduler greedy
