@@ -1,5 +1,5 @@
 # From raw reads to expression table
-This file has been written on 11th of May 2024. Maybe it is not update or functional anymore in future. UPDATE: 27.08.24 to work around snakemake job-submission issues
+This file has been written on 11th of May 2024. Maybe it is not update or functional anymore in future. UPDATE: 27.08.24 to work around snakemake job-submission issues.
 The profile and submission scripts were not used by Snakemake to submit the jobs and they had the default resources. This caused problem for some large files and slowed the processed drastically. I solved the problem based on [this](https://snakemake.github.io/snakemake-plugin-catalog/plugins/executor/slurm.html), [this](https://www.embl.org/groups/bioinformatics-rome/blog/2022/05/snakemake-profile-5-handling-memory-and-timeout-errors/), and [this](https://snakemake.readthedocs.io/en/stable/). This setup has been tested with Snakemake version 8.11.3 and Slurm version 23.11.4 and works properly.
 
 ## 0. Workflow
