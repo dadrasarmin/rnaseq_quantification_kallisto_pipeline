@@ -12,11 +12,9 @@ cluster-generic-submit-cmd: "sbatch --output={resources.output} --error={resourc
 default-resources:
     mem_mb: 8000
     runtime: "4h"
-    slurm_partition: "medium"
-    node_properties: scratch
+    slurm_partition: "scc-cpu"
     tasks: 1
     nodes: 1
-    slurm_extra: "'-o slurm_%j.out -e slurm_%j.log'"
 set-resources:
     kallisto_quant:
         mem_mb: 64000
