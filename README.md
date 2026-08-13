@@ -20,7 +20,7 @@ conda create -n snakemake -c conda-forge mamba python
 ```
 And then, use mamba to install snakemake:
 ```
-mamba install -c conda-forge -c bioconda snakemake=8.16.0
+mamba install -c conda-forge -c bioconda snakemake
 ```
 Since Snakemake version 8, you have to do a few extra steps:
 ```
