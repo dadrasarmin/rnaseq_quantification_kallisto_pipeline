@@ -3,11 +3,11 @@
 #SBATCH -c 2
 #SBATCH --mem=10G
 #SBATCH -o outfile-%J
-#SBATCH -C scratch
-#SBATCH -p medium
+#SBATCH -p scc-cpu
 #SBATCH --mail-type=BEGIN,END
-#SBATCH --mail-user=armin.dadras@uni-goettingen.de
+#SBATCH --mail-user=yourmail@uni-goettingen.de
 
-# Please edit the email section! I do not want to receive emails for your jobs.
+source ~/.bashrc
+conda activate snakemake
 
 snakemake -p --software-deployment-method conda --executor slurm --profile profile/ --scheduler greedy
